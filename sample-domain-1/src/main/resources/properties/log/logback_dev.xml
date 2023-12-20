@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm:ss.SSS}  [%highlight(%5level)] [%thread] [%30.30logger{30}] - %m%n</Pattern>
+        </layout>
+    </appender>
+    <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="INFO">
+        <encoder>성
+            <charset>UTF-8</charset>
+            <pattern>%d{HH:mm:ss.SSS} [%5level] [%thread] [%30.30logger{30}] - %m%n</pattern>
+        </encoder>
+        <file>logs/info.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+        </filter>
+
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <onMatch>DENY</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>DENY</onMatch>
+        </filter>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/info-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>60</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="ERROR">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{HH:mm:ss.SSS} [%5level] [%thread] [%30.30logger{30}] - %m%n</pattern>
+        </encoder>
+
+        <file>logs/error.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/error-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>60</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="ASYNC-STDOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <param name="BufferSize" value="8196"/>
+        <param name="locationInfo" value="true"/>
+        <param name="neverBlock" value="true"/>
+        <param name="includeCallerData" value="false"/>
+        <param name="discardingThreshold" value="0"/>
+        <appender-ref ref="STDOUT"/>
+    </appender>
+
+    <appender name="ASYNC-INFO" class="ch.qos.logback.classic.AsyncAppender">
+        <param name="BufferSize" value="8196"/>
+        <param name="locationInfo" value="true"/>
+        <param name="neverBlock" value="true"/>
+        <param name="includeCallerData" value="false"/>
+        <param name="discardingThreshold" value="0"/>
+        <appender-ref ref="INFO"/>
+    </appender>
+
+    <appender name="ASYNC-ERROR" class="ch.qos.logback.classic.AsyncAppender">
+        <param name="BufferSize" value="8196"/>
+        <param name="locationInfo" value="true"/>
+        <param name="neverBlock" value="true"/>
+        <param name="includeCallerData" value="false"/>
+        <param name="discardingThreshold" value="0"/>
+        <appender-ref ref="ERROR"/>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="ASYNC-STDOUT"/>
+        <appender-ref ref="ASYNC-INFO"/>
+        <appender-ref ref="ASYNC-ERROR"/>
+    </root>
+</configuration>
