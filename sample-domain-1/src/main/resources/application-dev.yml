@@ -1,0 +1,30 @@
+server:
+  port: 25000
+
+spring:
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+    properties:
+      org:
+        hibernate:
+          format_sql: true
+          dialect: org.hibernate.dialect.MySQL8Dialect
+          envers:
+            audit_table_suffix: _history
+            modified_flag_suffix: _changed
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/template_domain_1
+    username: template
+    password: template
+    hikari:
+      connection-timeout: 9000
+      idle-timeout: 150000
+      max-lifetime: 200000
+      maximum-pool-size: 5
+      minimum-idle: 5
+

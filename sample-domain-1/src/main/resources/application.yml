@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: sample-domain-1
+  profiles:
+    active: dev
+server:
+  port:
+  servlet:
+    context-path: /rene-template
+    encoding:
+      charset: UTF-8
+  undertow:
+    max-http-post-size: -1B
+    buffer-size: 2048
+    direct-buffers: true
+
+logging:
+  config: classpath:properties/log/logback_dev.xml
+  level:
+    org.hibernate.sql: INFO
+
