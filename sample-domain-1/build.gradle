@@ -2,10 +2,11 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'io.gatling.gradle' version "3.9.3"
 }
 
 group = 'kr.rene.template'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 
 java {
     sourceCompatibility = '21'
@@ -47,7 +48,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
 
-
     // swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
@@ -62,4 +62,13 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+
+gatling {
+    jvmArgs = ['-server', '-Xms512M', '-Xmx512M']
+    systemProperties = ['file.encoding': 'UTF-8']
+    simulations = {
+        include "**/kr/rene/template/sampledomain1/UserGenerationByDifferentMappers.java"
+    }
 }
